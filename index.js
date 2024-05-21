@@ -1,1 +1,2 @@
-console.log("Learning node js basic!")
+const express = require("express") ;
+const app = express() ;
