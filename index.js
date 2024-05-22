@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 
 // APP MIDDLEWARE (Corrected placement and conditional execution)
-app.use(requestFilter); // Apply middleware to all routes
+// app.use(requestFilter); // Apply middleware to all routes
 
 function requestFilter(req, res, next) {
   if (!req.query.age) {
@@ -19,11 +19,11 @@ app.get("/", (req, res) => {
   res.send("This is home page");
 });
 
-app.get("/users", (req, res) => {
+app.get("/users", requestFilter, (req, res) => {
   res.send("This is users page");
 });
 
-app.get("/profile", (req, res) => {
+app.get("/profile", requestFilter , (req, res) => {
   res.send("This is profile page");
 });
 
