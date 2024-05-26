@@ -27,4 +27,18 @@ app.post("/" , (req, res) => {
     })
 })
 
+//PUT API
+app.put("/:id" , (req, res) => {
+    // const data = ["ishu", "ishu@123" , "user" , 3] ;
+    const data = [req.body.name , req.body.password , req.body.user_type , req.params.id] ;
+    con.query("UPDATE users SET name = ? , password =  ? , user_type = ? where id = ?" , data , (err , result , fields) => {
+        if(err) {
+            console.log("ERROR - PUT USER" , err) ;
+        }
+        else{
+            res.send([result , fields]) ;
+        }
+    })
+})
+
 app.listen(4500) ;
