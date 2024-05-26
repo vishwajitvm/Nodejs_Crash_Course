@@ -41,4 +41,16 @@ app.put("/:id" , (req, res) => {
     })
 })
 
+//DELETE API
+app.delete("/:id" , (req , res) => {
+    con.query("DELETE FROM users WHERE id =" + req.params.id , (err , result , fields) => {
+        if(err) {
+            console.log("ERROR - DELETE USER" , err) ;
+        }
+        else{
+            res.send([result , fields]) ;
+        }
+    })
+})
+
 app.listen(4500) ;
