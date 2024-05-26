@@ -13,4 +13,18 @@ app.get("/" , (req, res) => {
     }) ;
 })
 
+//POST API
+app.use(express.json())
+app.post("/" , (req, res) => {
+    const data = req.body ;
+    con.query("INSERT into users set ?" , data , (err , result, fields) => {
+        if(err) {
+            console.log("ERROR - POST USER" , err) ;
+        }
+        else{
+            res.send(result) ;
+        }
+    })
+})
+
 app.listen(4500) ;
