@@ -4,6 +4,13 @@ const compression = require('compression');
 const sequelize = require('./config/database');
 const userRoutes = require('./routes/userRoutes');
 const authRoutes = require('./routes/authRoutes');
+const admin = require('firebase-admin');
+const firebaseConfig = require('./config/firebaseConfig');
+
+admin.initializeApp({
+  credential: admin.credential.applicationDefault(),
+  databaseURL: "https://nodejs-rcsm-practice.firebaseio.com"
+});
 
 const app = express();
 const port = process.env.PORT || 3000;

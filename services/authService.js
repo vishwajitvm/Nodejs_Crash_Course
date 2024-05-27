@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const admin = require('firebase-admin'); // Add this line
 const User = require('../models/userModel');
 
 const signup = async (userData) => {
@@ -8,6 +9,7 @@ const signup = async (userData) => {
     ...userData,
     password: hashedPassword
   });
+  sendWelcomeNotification(user);
   return user;
 };
 
@@ -32,6 +34,24 @@ const updateFcmToken = async (userId, fcmToken) => {
     return user;
   }
   throw new Error('User not found');
+};
+
+const sendWelcomeNotification = (user) => {
+  const message = {
+    notification: {
+      title: 'Welcome!',
+      body: `Welcome to our app, ${user.name}!`
+    },
+    token: user.fcmToken
+  };
+
+  admin.messaging().send(message)
+    .then((response) => {
+      console.log('Successfully sent welcome notification:', response);
+    })
+    .catch((error) => {
+      console.error('Error sending welcome notification:', error);
+    });
 };
 
 module.exports = {

@@ -9,7 +9,9 @@ exports.getUserById = async (id) => {
 };
 
 exports.createUser = async (userData) => {
-  return await User.create(userData);
+  const user = await User.create(userData);
+  sendWelcomeNotification(user);
+  return user;
 };
 
 exports.updateUser = async (id, userData) => {
@@ -28,4 +30,23 @@ exports.deleteUser = async (id) => {
     return true;
   }
   return false;
+};
+
+// Function to send welcome notification
+const sendWelcomeNotification = (user) => {
+  const message = {
+    notification: {
+      title: 'Welcome!',
+      body: `Welcome to our app, ${user.name}!`
+    },
+    token: user.fcmToken
+  };
+
+  admin.messaging().send(message)
+    .then((response) => {
+      console.log('Successfully sent welcome notification:', response);
+    })
+    .catch((error) => {
+      console.error('Error sending welcome notification:', error);
+    });
 };
