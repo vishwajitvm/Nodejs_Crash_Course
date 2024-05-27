@@ -3,6 +3,7 @@ const express = require('express');
 const compression = require('compression');
 const sequelize = require('./config/database');
 const userRoutes = require('./routes/userRoutes');
+const authRoutes = require('./routes/authRoutes');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -11,6 +12,7 @@ app.use(express.json());
 app.use(compression());
 
 app.use('/api/users', userRoutes);
+app.use('/api/auth', authRoutes);
 
 app.get('/', (req, res) => {
   res.send('app is working fine!');
